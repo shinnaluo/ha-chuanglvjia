@@ -1,0 +1,11 @@
+{
+  "domain": "chuanglvjia",
+  "name": "创绿家除醛仪",
+  "codeowners": [],
+  "config_flow": true,
+  "documentation": "https://github.com/shinnaluo/ha-chuanglvjia",
+  "integration_type": "hub",
+  "iot_class": "cloud_polling",
+  "requirements": [],
+  "version": "0.5.1"
+}

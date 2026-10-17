@@ -1,0 +1,42 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "登录创绿家账号",
+        "description": "填写微信 openId 与绑定手机号。\n\n**获取 openId**：\n1. 用手机微信打开创绿家小程序并抓包（如 HttpCanary / Stream / Charles）；\n2. 在登录请求 POST /ae_oss/wx/user/oneKeyEmpower 的请求体里复制 openId 字段（以 oyv- 开头）；\n3. 若小程序已登录不会发登录请求，可先删除微信中的该小程序再重新打开，触发一次登录即可抓到。\n\n集成会用 openId + 手机号自动向云端换取 token，之后 token 失效也会自动续期。",
+        "data": {
+          "open_id": "微信 openId",
+          "phone": "绑定手机号",
+          "bind_name": "绑定显示名（可默认）"
+        }
+      },
+      "reauth_confirm": {
+        "title": "重新登录",
+        "description": "token 已失效，请确认账号信息后重新登录。",
+        "data": {
+          "open_id": "微信 openId",
+          "phone": "绑定手机号"
+        }
+      }
+    },
+    "error": {
+      "invalid_auth": "账号信息验证失败，请检查 openId 与手机号",
+      "cannot_connect": "无法连接创绿家云端，请稍后重试",
+      "unknown": "发生未知错误，请查看日志"
+    },
+    "abort": {
+      "already_configured": "该 openId 已经配置过",
+      "no_devices": "账号下没有找到除醛仪设备"
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "集成选项",
+        "data": {
+          "scan_interval": "设备状态轮询间隔（秒）"
+        }
+      }
+    }
+  }
+}

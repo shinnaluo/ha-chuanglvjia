@@ -1,0 +1,42 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Log in to Chuanglvjia",
+        "description": "Enter your WeChat openId and bound phone number.\n\n**How to get the openId**:\n1. Open the Chuanglvjia mini program in WeChat while running a packet capture (HttpCanary / Stream / Charles);\n2. Copy the openId field (starts with oyv-) from the request body of POST /ae_oss/wx/user/oneKeyEmpower;\n3. If the mini program is already logged in, delete it from WeChat and reopen it once to trigger a login request.\n\nThe integration exchanges a token with the cloud using openId + phone, and refreshes it automatically.",
+        "data": {
+          "open_id": "WeChat openId",
+          "phone": "Bound phone number",
+          "bind_name": "Binding display name (optional)"
+        }
+      },
+      "reauth_confirm": {
+        "title": "Re-authenticate",
+        "description": "The token expired. Confirm your account details to log in again.",
+        "data": {
+          "open_id": "WeChat openId",
+          "phone": "Bound phone number"
+        }
+      }
+    },
+    "error": {
+      "invalid_auth": "Invalid openId or phone number",
+      "cannot_connect": "Cannot reach Chuanglvjia cloud, try again later",
+      "unknown": "Unexpected error, check logs"
+    },
+    "abort": {
+      "already_configured": "This openId is already configured",
+      "no_devices": "No formaldehyde removers found on this account"
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Integration options",
+        "data": {
+          "scan_interval": "Device polling interval (seconds)"
+        }
+      }
+    }
+  }
+}
