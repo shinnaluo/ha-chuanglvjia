@@ -34,7 +34,8 @@
       "init": {
         "title": "Integration options",
         "data": {
-          "scan_interval": "Device polling interval (seconds)"
+          "scan_interval": "Device polling interval (seconds)",
+          "bemfa_compat": "Fake HCHO as PM2.5 device class (bemfa-compatible without patching; shows as PM2.5). Off = custom hcho class."
         }
       }
     }
