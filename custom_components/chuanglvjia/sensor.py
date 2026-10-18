@@ -22,6 +22,8 @@ from .const import (
     ATTR_WORK_DURATION,
     ATTR_WORK_MODE_STATUS,
     ATTR_WORK_STATUS,
+    DEFAULT_BEMFA_COMPAT,
+    OPT_BEMFA_COMPAT,
     WORK_MODES,
     minutes_to_gear,
     parse_device_time,
@@ -35,6 +37,7 @@ async def async_setup_entry(
     async_add_entities: AddEntitiesCallback,
 ) -> None:
     coordinator = entry.runtime_data.data_coordinator
+    bemfa_compat = entry.options.get(OPT_BEMFA_COMPAT, DEFAULT_BEMFA_COMPAT)
     known: set[str] = set()
 
     @callback
@@ -43,7 +46,7 @@ async def async_setup_entry(
         for code in (coordinator.data or {}):
             if code not in known:
                 new.append(ChuanglvjiaStatusSensor(coordinator, code))
-                new.append(ChuanglvjiaHchoSensor(coordinator, code))
+                new.append(ChuanglvjiaHchoSensor(coordinator, code, bemfa_compat))
         if new:
             known.update(e.device_code for e in new)
             async_add_entities(new)
@@ -112,12 +115,20 @@ class ChuanglvjiaStatusSensor(ChuanglvjiaDeviceEntity, SensorEntity):
 
 
 class ChuanglvjiaHchoSensor(ChuanglvjiaDeviceEntity, SensorEntity):
-    """甲醛浓度（云端实时数据 environmentalData/view，单位 μg/m³）。"""
+    """甲醛浓度（云端实时数据 environmentalData/view，单位 μg/m³）。
+
+    bemfa_compat=True 时 device_class=pm25（巴法云免补丁可识别，显示为PM2.5）；
+    False 时使用自定义 "hcho"（需配合 bemfa_cloud 的 sync_sensor 补丁）。
+    """
 
     _attr_name = "甲醛浓度"
     _attr_native_unit_of_measurement = CONCENTRATION_MICROGRAMS_PER_CUBIC_METER
     _attr_state_class = SensorStateClass.MEASUREMENT
     entity_key = "hcho"
+
+    def __init__(self, coordinator, device_code: str, bemfa_compat: bool) -> None:
+        super().__init__(coordinator, device_code)
+        self._attr_device_class = "pm25" if bemfa_compat else "hcho"
 
     @property
     def _env(self) -> dict[str, Any] | None:
