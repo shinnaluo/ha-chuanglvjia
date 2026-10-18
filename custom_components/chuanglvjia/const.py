@@ -14,6 +14,11 @@ DEFAULT_BIND_NAME = "微信用户"
 DEFAULT_SCAN_INTERVAL = 60
 MIN_SCAN_INTERVAL = 15
 
+# 巴法云兼容：把甲醛传感器 device_class 伪装为 pm25（巴法云仅识别
+# temperature/humidity/illuminance/pm25/co2 五类）。关闭则使用自定义 "hcho"。
+OPT_BEMFA_COMPAT = "bemfa_compat"
+DEFAULT_BEMFA_COMPAT = True
+
 # 工作模式（2026-10-17 定向抓包实测）：
 #   智能 = workMode 0 + workModeStatus 0
 #   强效 = workMode 2 + time(档位编码) + workModeStatus 3
