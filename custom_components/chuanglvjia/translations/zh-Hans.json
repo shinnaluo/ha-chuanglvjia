@@ -34,7 +34,8 @@
       "init": {
         "title": "集成选项",
         "data": {
-          "scan_interval": "设备状态轮询间隔（秒）"
+          "scan_interval": "设备状态轮询间隔（秒）",
+          "bemfa_compat": "甲醛伪装为PM2.5（巴法云免补丁兼容，显示为PM2.5；关闭则用自定义hcho类别）"
         }
       }
     }
